@@ -708,6 +708,12 @@ static void draw_sidebar (int num_rows, int num_cols, int div_width)
       b->msg_count   = Context->msgcount;
       b->msg_flagged = Context->flagged;
     }
+#ifdef USE_NOTMUCH
+    /* discard current mailbox' value set above, and regenerate all the values from
+     * calling buffy_check that will rerun the notmuch count()
+     */
+    mutt_buffy_check(true);
+#endif
 
     /* compute length of Maildir without trailing separator */
     size_t maildirlen = mutt_strlen (Maildir);
